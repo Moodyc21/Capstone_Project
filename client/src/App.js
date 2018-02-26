@@ -3,6 +3,7 @@ import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom
 import SignUpLogIn from './components/SignUpLogIn'
 import axios from 'axios'
 import BoardsList from "./components/BoardsList";
+import {saveAuthTokens} from "./util/SessionHeaderUtil";
 
 class App extends Component {
 
@@ -37,28 +38,45 @@ class App extends Component {
     }
 
     signUp = async (email, password, password_confirmation) => {
-        ...
-    }
-
-    signIn = async (email, password) => {
-        try {
-            const payload = {
-                email,
-                password
-            }
-            await axios.post('/auth/sign_in', payload)
-
-            const boards = await this.getBoards()
-
-            this.setState({
-                signedIn: true,
-                boards
-            })
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
+      try {
+          const payload = {
+              email: email,
+              password: password,
+              password_confirmation: password_confirmation
+          }
+          const response = await axios.post('/auth', payload)
+          saveAuthTokens(response.headers)
+  
+          this.setState({
+              signedIn: true,
+          })
+  
+      } catch (error) {
+          console.log(error)
+      }
+  }
+  
+  signIn = async (email, password) => {
+      try {
+          const payload = {
+              email,
+              password
+          }
+          const response = await axios.post('/auth/sign_in', payload)
+          saveAuthTokens(response.headers)
+          
+  
+          const boards = await this.getBoards()
+  
+          this.setState({
+              signedIn: true,
+              boards
+          })
+  
+      } catch (error) {
+          console.log(error)
+      }
+  }
 
     render() {
 
