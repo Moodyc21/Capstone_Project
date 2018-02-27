@@ -26,7 +26,7 @@ class App extends Component {
         
                 this.setState({
                     boards,
-                    signedIn,
+                    signedIn
                 })
             } catch(error) {
                 console.log(error)
@@ -109,7 +109,8 @@ class App extends Component {
 
         const BoardsComponent = () => (
             <BoardsList
-                boards={this.state.boards}/>
+                boards={this.state.boards}
+                getBoards={this.getBoards}/>
         )
         const SignUpComponent = () => (
           <SignUp signUp={this.signUp} />
