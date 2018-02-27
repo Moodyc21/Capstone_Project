@@ -15,15 +15,18 @@ User.destroy_all
 moody = User.create!(
     email: 'moodyc21@gmail.com',
     password: 'cm017914',
-    password_confirmation: 'cm017914'
+    password_confirmation: 'cm017914',
+    image: 'https://i.imgur.com/XT6bwJI.jpg?1'
 )
 
 sarah = User.create!(
     email: 'sarahhampton@gmail.com',
     password: 'blahblah',
-    password_confirmation: 'blahblah'
+    password_confirmation: 'blahblah',
+    image: 'https://i.imgur.com/70Rc93W.jpg'
 )
 
 Board.create!(name: "moody's", year: "2012", completed: false, user: moody)
+Board.create!(name: "moody's other", year: "2014", completed: false, user: moody)
 
 Board.create!(name: "sarah's", year: "2016", completed: false, user: sarah)
