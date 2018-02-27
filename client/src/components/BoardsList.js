@@ -19,7 +19,7 @@ const BoardsList = (props) => {
     const boards = props.boards.map((board) => {
         return (
             <Box>
-            <Board {...boards} getBoards={props.getBoards} deleteBoard={props.deleteBoard} key={board.id}/>
+            <Board {...board} getBoards={props.getBoards} deleteBoard={props.deleteBoard} key={board.id}/>
             </Box>
         )
     })

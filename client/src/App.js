@@ -9,8 +9,10 @@ import SignUp from './forms/SignUp.js'
 class App extends Component {
 
     state = {
+        current_user: '',
         signedIn: false,
         boards: [],
+        image: ''
         
     }
 
@@ -19,17 +21,32 @@ class App extends Component {
                 const signedIn = userIsLoggedIn()
         
                 let boards = []
+                let current_user = []
                 if (signedIn) {
                     setAxiosDefaults()
                     boards = await this.getBoards()
+                    current_user = await this.getCurrentUser()
+                    console.log("this is the currentUser", current_user)
                 }
         
                 this.setState({
                     boards,
-                    signedIn
+                    signedIn,
+                    current_user
                 })
             } catch(error) {
                 console.log(error)
+            }
+        }
+
+        getCurrentUser = async () => {
+            try {
+                const response = await axios.get('/auth/:provider/callback')
+                console.log("This is a res", response)
+                return response.data
+            } catch (error) {
+                console.log("Did not get", error)
+                return []
             }
         }
 
@@ -98,6 +115,17 @@ class App extends Component {
     }
 }
 
+deleteBoard = async (boardId) => {
+    try {
+        await axios.delete(`/boards/${boardId}`)
+
+        const boards = await this.getBoards()
+        this.setState({boards})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
     render() {
 
@@ -110,7 +138,8 @@ class App extends Component {
         const BoardsComponent = () => (
             <BoardsList
                 boards={this.state.boards}
-                getBoards={this.getBoards}/>
+                getBoards={this.getBoards}
+                deleteBoard={this.deleteBoard}/>
         )
         const SignUpComponent = () => (
           <SignUp signUp={this.signUp} />
@@ -128,6 +157,9 @@ class App extends Component {
                     {this.state.signedIn ? <Redirect to="/boards"/> : <Redirect to="/signUp"/>}
                     <div>
                     {this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button> : null}
+                    </div>
+                    <div>
+                    {this.state.signedIn ? <img src={this.state.current_user.image} alt="User Profile Pic"/> : null}
                     </div>
                     
                 </div>
