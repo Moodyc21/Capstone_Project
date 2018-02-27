@@ -1,31 +1,37 @@
 import React, {Component} from 'react'
 import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom'
-import SignUpLogIn from './components/SignUpLogIn'
+import SignUpLogIn from './forms/SignUpLogIn'
 import axios from 'axios'
 import BoardsList from "./components/BoardsList";
-import {saveAuthTokens} from "./util/SessionHeaderUtil";
+import {clearAuthTokens, saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from "./util/SessionHeaderUtil";
+import SignUp from './forms/SignUp.js'
 
 class App extends Component {
 
     state = {
         signedIn: false,
-        boards: []
+        boards: [],
+        
     }
 
     async componentWillMount() {
-        try {
-            let boards = []
-            if (this.state.signedIn) {
-                boards = await this.getBoards()
+            try {
+                const signedIn = userIsLoggedIn()
+        
+                let boards = []
+                if (signedIn) {
+                    setAxiosDefaults()
+                    boards = await this.getBoards()
+                }
+        
+                this.setState({
+                    boards,
+                    signedIn,
+                })
+            } catch(error) {
+                console.log(error)
             }
-
-            this.setState({
-                boards
-            })
-        } catch (error) {
-            console.log(error);
         }
-    }
 
     getBoards = async () => {
         try {
@@ -78,6 +84,21 @@ class App extends Component {
       }
   }
 
+  signOut = async (event) => {
+    try {
+        event.preventDefault()
+        
+        await axios.delete('/auth/sign_out')
+
+        clearAuthTokens();
+
+        this.setState({signedIn: false})
+    } catch(error) {
+        console.log(error)
+    }
+}
+
+
     render() {
 
         const SignUpLogInComponent = () => (
@@ -90,6 +111,9 @@ class App extends Component {
             <BoardsList
                 boards={this.state.boards}/>
         )
+        const SignUpComponent = () => (
+          <SignUp signUp={this.signUp} />
+        )
 
         return (
             <Router>
@@ -101,6 +125,10 @@ class App extends Component {
 
                     {/* If user is signed in, redirect to their posts. */}
                     {this.state.signedIn ? <Redirect to="/boards"/> : <Redirect to="/signUp"/>}
+                    <div>
+                    {this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button> : null}
+                    </div>
+                    
                 </div>
             </Router>
         )

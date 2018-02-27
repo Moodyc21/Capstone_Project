@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import SignUp from '../forms/SignUp.js'
 
 class SignUpLogIn extends Component {
 
@@ -43,15 +44,18 @@ class SignUpLogIn extends Component {
                         <label htmlFor="password">Password: </label>
                         <input onChange={this.handleChange} type="password" name="password" value={this.state.password}/>
                     </div>
-                    <div>
+                    {/* <div>
                         <label htmlFor="password_confirmation">Confirm Password: </label>
                         <input onChange={this.handleChange} type="password" name="password_confirmation"
                                value={this.state.password_confirmation}/>
-                    </div>
+                    </div> */}
 
-                    <button onClick={this.signUp}>Sign Up</button>
+                    
                     <button onClick={this.signIn}>Log In</button>
                 </form>
+                <div>
+                      <SignUp signUp={this.props.signUp}/>
+                    </div>
             </div>
         )
     }
