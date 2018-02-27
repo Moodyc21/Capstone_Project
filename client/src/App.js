@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom'
 import SignUpLogIn from './forms/SignUpLogIn'
 import axios from 'axios'
-import BoardsList from "./components/BoardsList";
+import BoardsList from "./boards/BoardsList";
 import {clearAuthTokens, saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from "./util/SessionHeaderUtil";
 import SignUp from './forms/SignUp.js'
 
@@ -39,9 +39,9 @@ class App extends Component {
             }
         }
 
-        getCurrentUser = async () => {
+        getCurrentUser = async (userId) => {
             try {
-                const response = await axios.get('/auth/:provider/callback')
+                const response = await axios.get(`/users/${userId}`)
                 console.log("This is a res", response)
                 return response.data
             } catch (error) {
@@ -115,6 +115,21 @@ class App extends Component {
     }
 }
 
+createBoard = async (name, year, completed) => {
+    try{ 
+        const payload = {
+            name: name,
+            year: year,
+            completed: completed
+        }
+        await axios.post('/boards', payload)
+        const boards = await this.getBoards()
+        this.setState({boards})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 deleteBoard = async (boardId) => {
     try {
         await axios.delete(`/boards/${boardId}`)
@@ -139,6 +154,7 @@ deleteBoard = async (boardId) => {
             <BoardsList
                 boards={this.state.boards}
                 getBoards={this.getBoards}
+                createBoard={this.createBoard}
                 deleteBoard={this.deleteBoard}/>
         )
         const SignUpComponent = () => (

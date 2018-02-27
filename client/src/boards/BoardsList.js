@@ -1,6 +1,7 @@
 import React from 'react'
 import Board from "./Board"
 import styled from 'styled-components'
+import NewBoard from './NewBoard.js'
 
 
 const Box = styled.div`
@@ -30,7 +31,7 @@ const BoardsList = (props) => {
             {props.boards.length > 0 ? boards : null}
         
         <Box>
-            <h2>Add Board(+)</h2>
+            <h2>Add Board <NewBoard createBoard={props.createBoard} /></h2>
         </Box>
 
         </div>

@@ -16,7 +16,7 @@ class BoardsController < ApplicationController
       
         def create
           @user = current_user
-          @board = @user.boards.build(post_params)
+          @board = @user.boards.create(board_params)
       
           if @user.save
             render json: @board, status: :created, location: @board
@@ -29,7 +29,7 @@ class BoardsController < ApplicationController
           @board = Board.find(params[:id])
       
       
-          if @board.update(post_params)
+          if @board.update(board_params)
             render json: @board
           else
             render json: @board.errors, status: :unprocessable_entity
