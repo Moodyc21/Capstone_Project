@@ -67,10 +67,13 @@ class App extends Component {
             }
             const response = await axios.post('/auth', payload)
             saveAuthTokens(response.headers)
-            console.log("This this state", this.state)
+            console.log("This this state", response)
 
 
-            this.setState({signedIn: true, current_user: response.data})
+            this.setState({signedIn: true, current_user: response.data.data})
+            alert('Thanks for signing up!', this.state.current_user.email)
+
+            console.log('current:', this.state.current_user)
             
 
         } catch (error) {
@@ -165,7 +168,9 @@ class App extends Component {
                     </Switch>
 
                     {/* If user is signed in, redirect to their posts. */}
+                    <div>
                     {this.state.signedIn ? null : <Redirect to="/signUp"/>}
+                    </div>
                     <div>
                         {this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button> : null}
                     </div>

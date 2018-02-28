@@ -10,14 +10,15 @@ class SignUpLogIn extends Component {
         signedIn: false
     }
 
-    signUp = (event) => {
-        event.preventDefault()
-        this.props.signUp(
-            this.state.email,
-            this.state.password,
-            this.state.password_confirmation
-        )
-    }
+    // signUp = (event) => {
+    //     event.preventDefault()
+    //     this.props.signUp(
+    //         this.state.email,
+    //         this.state.password,
+    //         this.state.password_confirmation
+    //     )
+    //     this.setState({signedIn: true})
+    // }
 
     signIn = (event) => {
         event.preventDefault()

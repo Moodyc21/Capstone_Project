@@ -19,6 +19,7 @@ class SignUpSignInForm extends Component {
         this.state.password_confirmation,
         this.state.image
     )
+    
 }
 
   render() {

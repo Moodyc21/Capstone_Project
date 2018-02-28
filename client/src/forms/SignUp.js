@@ -4,7 +4,7 @@ import SignUpSignInForm from './SignUpSignInForm.js'
 
 class SignUp extends Component {
 
-    constructor(props) {
+    constructor() {
         super()
         this.state = {
             isHidden: true,
