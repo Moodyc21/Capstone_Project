@@ -6,7 +6,8 @@ class SignUpLogIn extends Component {
     state = {
         email: '',
         password: '',
-        password_confirmation: ''
+        password_confirmation: '', 
+        signedIn: false
     }
 
     signUp = (event) => {
@@ -24,6 +25,7 @@ class SignUpLogIn extends Component {
             this.state.email,
             this.state.password
         )
+        this.setState({signedIn: true})
     }
 
     handleChange = (event) => {
@@ -54,7 +56,7 @@ class SignUpLogIn extends Component {
                     <button onClick={this.signIn}>Log In</button>
                 </form>
                 <div>
-                      <SignUp signUp={this.props.signUp}/>
+                      <SignUp signUp={this.props.signUp} signedIn={this.state.signedIn}/>
                     </div>
             </div>
         )

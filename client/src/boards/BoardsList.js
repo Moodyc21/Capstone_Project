@@ -1,8 +1,15 @@
 import React from 'react'
 import Board from "./Board"
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import NewBoard from './NewBoard.js'
+import animateCSS from 'animate.css'
+import { slideInUp } from 'react-animations'
 
+const slideAnimation = keyframes`${slideInUp}`;
+
+const slideDiv = styled.div`
+  animation: 2s ${slideAnimation};
+`
 
 const Box = styled.div`
     background: #fff;
@@ -19,9 +26,11 @@ const BoardsList = (props) => {
 
     const boards = props.boards.map((board) => {
         return (
+            <slideDiv>
             <Box>
             <Board {...board} getBoards={props.getBoards} deleteBoard={props.deleteBoard} key={board.id}/>
             </Box>
+            </slideDiv>
         )
     })
     return (

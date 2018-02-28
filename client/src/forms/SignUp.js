@@ -4,12 +4,19 @@ import SignUpSignInForm from './SignUpSignInForm.js'
 
 class SignUp extends Component {
 
-    constructor() {
+    constructor(props) {
         super()
         this.state = {
-            isHidden: true
+            isHidden: true,
+        
+        
         }
+    
     }
+    // componentWillMount() {
+    //     this.setState({signedIn: this.props.signedIn})
+        
+    // }
 
     toggleHidden () {
         this.setState({
@@ -17,10 +24,13 @@ class SignUp extends Component {
         })
     }
 
+    
+
     render() {
         return(
             <div>
-                <button onClick={this.toggleHidden.bind(this)}>Sign Up</button>
+                
+                {!this.props.signedIn ? <button onClick={this.toggleHidden.bind(this)}>Sign Up</button> : null}
                 {!this.state.isHidden && <SignUpSignInForm signUp={this.props.signUp}/>}
             </div>
 
