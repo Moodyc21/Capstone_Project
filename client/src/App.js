@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom'
+import {Route, BrowserRouter as Router, Link, Switch, Redirect} from 'react-router-dom'
 import SignUpLogIn from './forms/SignUpLogIn'
 import axios from 'axios'
 import BoardsList from "./boards/BoardsList";
@@ -109,6 +109,8 @@ class App extends Component {
 
             this.setState({signedIn: false, current_user: [], image: ''})
             console.log('This is the state signout', this.state)
+
+
         } catch (error) {
             console.log(error)
         }
@@ -163,9 +165,12 @@ class App extends Component {
                     </Switch>
 
                     {/* If user is signed in, redirect to their posts. */}
-                    {/* {this.state.signedIn ? <Redirect to="/boards"/> : <Redirect to="/signUp"/>} */}
+                    {this.state.signedIn ? null : <Redirect to="/signUp"/>}
                     <div>
                         {this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button> : null}
+                    </div>
+                    <div>
+                        {this.state.signedIn ? <Link to={`/boards`}><button>Vision Boards</button></Link> : null}
                     </div>
 
                 </div>
