@@ -3,6 +3,7 @@ import {Route, BrowserRouter as Router, Link, Switch, Redirect} from 'react-rout
 import SignUpLogIn from './forms/SignUpLogIn'
 import axios from 'axios'
 import BoardsList from "./boards/BoardsList";
+import BoardShow from './boards/BoardShow'
 import {clearAuthTokens, saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from "./util/SessionHeaderUtil";
 import SignUp from './forms/SignUp.js'
 import styled from 'styled-components'
@@ -57,6 +58,17 @@ class App extends Component {
             return []
         }
     }
+
+    getOneBoard = async(boardId) => {
+        try {
+            const response = await axios.get(`/boards/${boardId}`)
+            return response.data
+        } catch (error) {
+            console.log(error)
+            return []
+        }
+    }
+    
 
     signUp = async(email, password, password_confirmation, image) => {
         try {
@@ -171,6 +183,8 @@ class App extends Component {
             deleteBoard={this.deleteBoard}/>)
         const SignUpComponent = () => (<SignUp signUp={this.signUp} signedUp={this.state.signedUp}/>)
 
+        const BoardShowComponent = (props) => (<BoardShow getOneBoard={this.getOneBoard} {...props} />)
+
         return (
             <Router>
                 <div>
@@ -183,6 +197,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/signUp" render={SignUpLogInComponent}/>
                         <Route exact path="/boards" render={BoardsComponent}/>
+                        <Route path="/boards/:id" render={BoardShowComponent}/>
                     </Switch>
 
                     {/* If user is signed in, redirect to their posts. */}

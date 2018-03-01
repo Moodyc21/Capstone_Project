@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import {Route, BrowserRouter as Router, Link, Switch, Redirect} from 'react-router-dom'
 import Board from "./Board"
 import styled, { keyframes } from 'styled-components'
 import NewBoard from './NewBoard.js'
@@ -26,11 +27,11 @@ const BoardsList = (props) => {
 
     const boards = props.boards.map((board) => {
         return (
-            <slideDiv>
+            <Link to={`/boards/${board.id}`}>
             <Box>
             <Board {...board} getBoards={props.getBoards} deleteBoard={props.deleteBoard} key={board.id}/>
             </Box>
-            </slideDiv>
+            </Link>
         )
     })
     return (

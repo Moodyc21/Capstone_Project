@@ -34,10 +34,10 @@ class NewBoardForm extends Component {
                         <Form.Input placeholder='name' name='name' value={name} onChange={this.handleChange}/>
                         <Form.Input placeholder='year' name='year' value={year} onChange={this.handleChange}/>
                     </Form.Group>
-                    <Form.Group grouped>
+                    {/* <Form.Group grouped>
                         <Form.Input label='True' name='completed' type='radio' name='True' value={completed} onChange={this.handleChange}/>
                         <Form.Input label='False' name='completed' type='radio' name='False' value={completed} onChange={this.handleChange}/>
-                    </Form.Group>
+                    </Form.Group> */}
                     <Form.Button onClick={this.createBoard} content='Submit' />
                 </Form>
             </div>
