@@ -56,8 +56,9 @@ class SignUpLogIn extends Component {
                     
                     <button onClick={this.signIn}>Log In</button>
                 </form>
+                
                 <div>
-                      <SignUp signUp={this.props.signUp} signedIn={this.state.signedIn}/>
+                      <SignUp signUp={this.props.signUp} signedIn={this.state.signedIn} signedUp={this.props.signedUp} signedIn={this.props.signedIn}/>
                     </div>
             </div>
         )

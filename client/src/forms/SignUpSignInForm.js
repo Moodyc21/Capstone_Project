@@ -20,6 +20,7 @@ class SignUpSignInForm extends Component {
         this.state.image
     )
     
+    
 }
 
   render() {

@@ -13,7 +13,8 @@ class App extends Component {
         current_user: [],
         signedIn: false,
         boards: [],
-        image: ''
+        addedImage: false,
+        signedUp: false
 
     }
 
@@ -70,15 +71,29 @@ class App extends Component {
             console.log("This this state", response)
 
 
-            this.setState({signedIn: true, current_user: response.data.data})
+            this.setState({current_user: response.data.data, signedUp: true, addedImage: true})
             alert('Thanks for signing up!', this.state.current_user.email)
 
             console.log('current:', this.state.current_user)
+            this.getCurrentUser()
             
 
         } catch (error) {
             console.log(error)
         }
+    }
+
+    addImageSignup = async () => {
+
+        let image_url = prompt("Please enter an Image URL.")
+        const user = await this.getCurrentUser()
+        const imageUpdate = await axios.patch(`/users/${user.id}`, {
+            image: image_url})
+
+            console.log('ImageUpdateRes:', imageUpdate)
+
+            this.setState({current_user: imageUpdate, addedImage: false, signedUp: true, signedIn: true})
+            console.log("Add image current:", this.state.current_user)
     }
 
     signIn = async (email, password) => {
@@ -110,7 +125,7 @@ class App extends Component {
 
             clearAuthTokens();
 
-            this.setState({signedIn: false, current_user: [], image: ''})
+            this.setState({signedIn: false, signedUp: false, current_user: [], image: ''})
             console.log('This is the state signout', this.state)
 
 
@@ -147,18 +162,21 @@ class App extends Component {
 
     render() {
 
-        const SignUpLogInComponent = () => (<SignUpLogIn signUp={this.signUp} signIn={this.signIn}/>)
+        const SignUpLogInComponent = () => (<SignUpLogIn signUp={this.signUp} signIn={this.signIn} signedUp={this.state.signedUp} signedIn={this.state.signedIn}/>)
 
         const BoardsComponent = () => (<BoardsList
             boards={this.state.boards}
             getBoards={this.getBoards}
             createBoard={this.createBoard}
             deleteBoard={this.deleteBoard}/>)
-        const SignUpComponent = () => (<SignUp signUp={this.signUp}/>)
+        const SignUpComponent = () => (<SignUp signUp={this.signUp} signedUp={this.state.signedUp}/>)
 
         return (
             <Router>
                 <div>
+                   
+                    {this.state.addedImage ? <SignUpImage><button onClick={this.addImageSignup}>Add Image<br/>(+)</button></SignUpImage> : null}
+                    
                     <Imagewrapper>
                         {this.state.signedIn ? <img src={this.state.current_user.image} alt="User Profile Pic"/> : null}
                     </Imagewrapper>
@@ -170,6 +188,9 @@ class App extends Component {
                     {/* If user is signed in, redirect to their posts. */}
                     <div>
                     {this.state.signedIn ? null : <Redirect to="/signUp"/>}
+                    </div>
+                    <div>
+                    {this.state.signedUp ? null : <Redirect to="/signUp"/>}
                     </div>
                     <div>
                         {this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button> : null}
@@ -193,5 +214,18 @@ const Imagewrapper = styled.div`
         width: 100px;
         border-radius: 49%;
     }
+    
+`
+const SignUpImage = styled.div`
+
+        border: 2px solid grey;
+        height: 100px;
+        width: 100px;
+        border-radius: 49%;
+
+    button {
+        margin: 25px 25px;
+    }
+
 
 `

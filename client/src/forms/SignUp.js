@@ -29,9 +29,17 @@ class SignUp extends Component {
     render() {
         return(
             <div>
-                
-                {!this.props.signedIn ? <button onClick={this.toggleHidden.bind(this)}>Sign Up</button> : null}
+                <div>
+                {this.props.signedUp ? null : <div><h2>Or</h2></div> }
+                </div>
+                <div>
+                {this.props.signedUp ? null : <button onClick={this.toggleHidden.bind(this)}>Sign Up</button>}
+               </div>
+               {this.props.signedUp ? null :
+                <div>
                 {!this.state.isHidden && <SignUpSignInForm signUp={this.props.signUp}/>}
+               </div>
+               }
             </div>
 
         )
