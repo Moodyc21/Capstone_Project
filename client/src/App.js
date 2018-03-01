@@ -4,6 +4,7 @@ import SignUpLogIn from './forms/SignUpLogIn'
 import axios from 'axios'
 import BoardsList from "./boards/BoardsList";
 import BoardShow from './boards/BoardShow'
+import SearchBar from './search/SearchBar'
 import {clearAuthTokens, saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from "./util/SessionHeaderUtil";
 import SignUp from './forms/SignUp.js'
 import styled from 'styled-components'
@@ -15,7 +16,8 @@ class App extends Component {
         signedIn: false,
         boards: [],
         addedImage: false,
-        signedUp: false
+        signedUp: false,
+        searchResults: []
 
     }
 
@@ -172,6 +174,18 @@ class App extends Component {
         }
     }
 
+    getImages = async(query) => {
+        try {
+            const response = await axios.get(`https://www.googleapis.com/customsearch/v1?key=${process.env.REACT_APP_CUSTOM_SEARCH}&fields=items(link)&cx=001195195440322982552:j1vwe7kfs4g&q=${query}&searchType=image`)
+            console.log("My image search res:", response.data.items)
+            this.setState({searchResults: response.data.items}) 
+        } catch (error) {
+            console.log(error)
+            return []
+        }
+    }
+
+
     render() {
 
         const SignUpLogInComponent = () => (<SignUpLogIn signUp={this.signUp} signIn={this.signIn} signedUp={this.state.signedUp} signedIn={this.state.signedIn}/>)
@@ -183,7 +197,8 @@ class App extends Component {
             deleteBoard={this.deleteBoard}/>)
         const SignUpComponent = () => (<SignUp signUp={this.signUp} signedUp={this.state.signedUp}/>)
 
-        const BoardShowComponent = (props) => (<BoardShow getOneBoard={this.getOneBoard} {...props} />)
+        const BoardShowComponent = (props) => (<BoardShow getOneBoard={this.getOneBoard} getImages={this.getImages} searchResults={this.state.searchResults} {...props} />)
+        const SearchComponent = (props) => (<SearchBar getImages={this.getImages} {...props}/>)
 
         return (
             <Router>

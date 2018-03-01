@@ -20,7 +20,7 @@ const Box = styled.div`
       height: 180px;
       margin: 10px;
       padding: 10px;
-      float: left;
+      float: left;s
     `
 
 const BoardsList = (props) => {
