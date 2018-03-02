@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form } from 'semantic-ui-react'
+import RaisedButton from 'material-ui/RaisedButton';
 
 class SignUpSignInForm extends Component {
   state = {email: '', password: '', password_confirmation: '', image: '', submittedEmail: '', submittedPassword: '', submittedPasswordConfirm: '', submittedImage: ''}
@@ -35,7 +36,7 @@ class SignUpSignInForm extends Component {
             <Form.Input placeholder='password' name='password' value={password} onChange={this.handleChange} />
             <Form.Input placeholder='password confirmation' name='password_confirmation' value={password_confirmation} onChange={this.handleChange} />
             <Form.Input placeholder='image_url' name='image' value={image} onChange={this.handleChange} />
-            <Form.Button onClick={this.signUp} content='Submit' />
+            <RaisedButton onClick={this.signUp} content='Submit'>Submit</RaisedButton>
           </Form.Group>
         </Form>
         {/* <strong>onChange:</strong>

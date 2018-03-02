@@ -1,6 +1,28 @@
 import React, {Component} from 'react'
 import SignUp from '../forms/SignUp.js'
+import { Input, Icon } from 'semantic-ui-react'
+import RaisedButton from 'material-ui/RaisedButton';
+import styled from 'styled-components'
 
+const Formdiv = styled.div`
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 200px 0;
+
+
+`
+
+const Formdivtwo = styled.div`
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+
+`
 class SignUpLogIn extends Component {
 
     state = {
@@ -37,15 +59,16 @@ class SignUpLogIn extends Component {
 
     render() {
         return (
-            <div>
+            <Formdiv>
+                <Formdivtwo>
                 <form>
                     <div>
-                        <label htmlFor="email">E-mail: </label>
-                        <input onChange={this.handleChange} type="text" name="email" value={this.state.email}/>
+                        {/* <label htmlFor="email">E-mail: </label> */}
+                        <Input onChange={this.handleChange} placeholder='e-mail' type="text" name="email" value={this.state.email}/>
                     </div>
                     <div>
-                        <label htmlFor="password">Password: </label>
-                        <input onChange={this.handleChange} type="password" name="password" value={this.state.password}/>
+                        {/* <label htmlFor="password">Password: </label> */}
+                        <Input onChange={this.handleChange} placeholder='password' type="password" name="password" value={this.state.password}/>
                     </div>
                     {/* <div>
                         <label htmlFor="password_confirmation">Confirm Password: </label>
@@ -54,13 +77,13 @@ class SignUpLogIn extends Component {
                     </div> */}
 
                     
-                    <button onClick={this.signIn}>Log In</button>
+                    <RaisedButton onClick={this.signIn}>Log In</RaisedButton>
                 </form>
-                
+                </Formdivtwo>
                 <div>
                       <SignUp signUp={this.props.signUp} signedIn={this.state.signedIn} signedUp={this.props.signedUp} signedIn={this.props.signedIn}/>
                     </div>
-            </div>
+            </Formdiv>
         )
     }
 }

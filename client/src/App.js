@@ -8,6 +8,11 @@ import SearchBar from './search/SearchBar'
 import {clearAuthTokens, saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from "./util/SessionHeaderUtil";
 import SignUp from './forms/SignUp.js'
 import styled from 'styled-components'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Button, Icon } from 'semantic-ui-react';
+import swal from 'sweetalert';
+
 
 
 class App extends Component {
@@ -88,7 +93,7 @@ class App extends Component {
 
 
             this.setState({current_user: response.data.data, signedUp: true, addedImage: true})
-            alert('Thanks for signing up!', this.state.current_user.email)
+            swal('Thanks for signing up!', this.state.current_user.email)
 
             console.log('current:', this.state.current_user)
             this.getCurrentUser()
@@ -214,15 +219,17 @@ class App extends Component {
 
         const SignUpComponent = () => (<SignUp signUp={this.signUp} signedUp={this.state.signedUp}/>)
 
-        const BoardShowComponent = (props) => (<BoardShow images={this.state.images} addSearchImage={this.addSearchImage} getOneBoard={this.getOneBoard} getImages={this.getImages} searchResults={this.state.searchResults} {...props} />)
+        const BoardShowComponent = (props) => (<BoardShow images={this.state.images} getOneBoard={this.getOneBoard} getImages={this.getImages} searchResults={this.state.searchResults} {...props} />)
 
         const SearchComponent = (props) => (<SearchBar getImages={this.getImages} {...props}/>)
 
         return (
+        <Background>
             <Router>
-                <div>
-                   
-                    {this.state.addedImage ? <SignUpImage><button onClick={this.addImageSignup}>Add Image<br/>(+)</button></SignUpImage> : null}
+                <HomeWrapper>
+              <MuiThemeProvider>
+                
+                    {this.state.addedImage ? <SignUpImage><button onClick={this.addImageSignup}>Img<br/>+</button></SignUpImage> : null}
                     
                     <Imagewrapper>
                         {this.state.signedIn ? <img src={this.state.current_user.image} alt="User Profile Pic"/> : null}
@@ -241,21 +248,44 @@ class App extends Component {
                     {this.state.signedUp ? null : <Redirect to="/signUp"/>}
                     </div>
                     <div>
-                        {this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button> : null}
+                        {this.state.signedIn ? <Buttondiv><RaisedButton onClick={this.signOut}>Sign Out</RaisedButton></Buttondiv> : null}
                     </div>
                     <div>
-                        {this.state.signedIn ? <Link to={`/boards`}><button>Vision Boards</button></Link> : null}
+                        {this.state.signedIn ? <Link to={`/boards`}><Buttondiv><RaisedButton>Vision Boards</RaisedButton></Buttondiv></Link> : null}
                     </div>
 
-                </div>
+            </MuiThemeProvider>
+
+            </HomeWrapper>
+                
             </Router>
+              </Background>
+            
         )
     }
 }
 
 export default App
 
+const Background = styled.div`
+        background-position: center;
+        height: 80vh;
+        width: 100vw;
+        background-image: url('https://i.imgur.com/GL50pfJ.png');
+        background-repeat: no-repeat;
+
+`
+
+const HomeWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 100px;
+
+`
+
 const Imagewrapper = styled.div`
+    margin: 30px 0;
     img {
         border: 2px solid grey;
         height: 100px;
@@ -265,15 +295,31 @@ const Imagewrapper = styled.div`
     
 `
 const SignUpImage = styled.div`
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         border: 2px solid grey;
         height: 100px;
         width: 100px;
         border-radius: 49%;
+        :hover{
+            border: 2px solid goldenrod;
+        }
 
     button {
-        margin: 25px 25px;
+        margin: 35px 35px;
+        border: none
+        
     }
+`
 
+const Buttondiv = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    button {
+        
+    }
 
 `

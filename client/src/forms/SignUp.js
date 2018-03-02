@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import SignUpSignInForm from './SignUpSignInForm.js'
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 class SignUp extends Component {
@@ -36,7 +37,7 @@ class SignUp extends Component {
                 }
                 {this.props.signedIn ? null :
                 <div>
-                {this.props.signedUp ? null : <button onClick={this.toggleHidden.bind(this)}>Sign Up</button>}
+                {this.props.signedUp ? null : <RaisedButton onClick={this.toggleHidden.bind(this)}>Sign Up</RaisedButton>}
                </div>
                 }
                {this.props.signedUp ? null :
