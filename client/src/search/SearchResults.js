@@ -8,12 +8,16 @@ const SearchResults = (props) => {
 
     const results = props.searchResults.map((image) => {
             return (
+                
 
                 <div>
-                    <Image {...image} key={image.id}/>
+                    <Image boardId={props.boardId} addSearchImage={props.addSearchImage} {...image} key={image.id}/>
+                    <div><button onClick = {() => props.addSearchImage(props.boardId, image.link)}>(+)</button></div>
+                    
                 </div>
-
+                
             )
+            
         })
 
     return (

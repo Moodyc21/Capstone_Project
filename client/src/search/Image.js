@@ -14,13 +14,21 @@ const ImageWrapper = styled.div`
 
 `
 
+
 const Image = (props) => {
+    // const addSearchImage = () => {
+    //     // const boardId = props.match.params.id
+    //     props.addSearchImage(props.boardId, props.key)
+    // }
   
     return (
         
-                
+                <div>
+                    {/* <div><button onClick={addSearchImage}>(+)</button></div> */}
         
             <ImageWrapper><img src={props.link} alt="image"/></ImageWrapper>  
+
+            </div>
     
     )
 }

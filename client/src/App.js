@@ -115,9 +115,7 @@ class App extends Component {
             const payload = {
                 email,
                 password,
-            
             }
-
             const response = await axios.post('/auth/sign_in', payload)
             saveAuthTokens(response.headers)
             console.log("Res.data", response)
@@ -125,7 +123,7 @@ class App extends Component {
             const boards = await this.getBoards()
 
             this.setState({signedIn: true, boards, current_user: response.data.data})
-
+            
         } catch (error) {
             console.log(error)
         }
@@ -185,6 +183,21 @@ class App extends Component {
         }
     }
 
+    addSearchImage = async(boardId, image) => {
+        try {
+            const payload = {
+                board_id: boardId,
+                link: image
+            }
+            const response = await axios.post(`/boards/${boardId}/images`, payload)
+            console.log("Did I add image to db:", response)
+            
+        } catch (error) {
+            console.log(error)
+            return []
+        }
+    }
+
 
     render() {
 
@@ -197,7 +210,7 @@ class App extends Component {
             deleteBoard={this.deleteBoard}/>)
         const SignUpComponent = () => (<SignUp signUp={this.signUp} signedUp={this.state.signedUp}/>)
 
-        const BoardShowComponent = (props) => (<BoardShow getOneBoard={this.getOneBoard} getImages={this.getImages} searchResults={this.state.searchResults} {...props} />)
+        const BoardShowComponent = (props) => (<BoardShow addSearchImage={this.addSearchImage} getOneBoard={this.getOneBoard} getImages={this.getImages} searchResults={this.state.searchResults} {...props} />)
         const SearchComponent = (props) => (<SearchBar getImages={this.getImages} {...props}/>)
 
         return (
