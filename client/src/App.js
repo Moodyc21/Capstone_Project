@@ -9,6 +9,7 @@ import {clearAuthTokens, saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from 
 import SignUp from './forms/SignUp.js'
 import styled from 'styled-components'
 
+
 class App extends Component {
 
     state = {
@@ -17,7 +18,8 @@ class App extends Component {
         boards: [],
         addedImage: false,
         signedUp: false,
-        searchResults: []
+        searchResults: [],
+        images: []
 
     }
 
@@ -191,6 +193,7 @@ class App extends Component {
             }
             const response = await axios.post(`/boards/${boardId}/images`, payload)
             console.log("Did I add image to db:", response)
+            console.log("Image board ID:", boardId)
             
         } catch (error) {
             console.log(error)
@@ -208,9 +211,11 @@ class App extends Component {
             getBoards={this.getBoards}
             createBoard={this.createBoard}
             deleteBoard={this.deleteBoard}/>)
+
         const SignUpComponent = () => (<SignUp signUp={this.signUp} signedUp={this.state.signedUp}/>)
 
-        const BoardShowComponent = (props) => (<BoardShow addSearchImage={this.addSearchImage} getOneBoard={this.getOneBoard} getImages={this.getImages} searchResults={this.state.searchResults} {...props} />)
+        const BoardShowComponent = (props) => (<BoardShow images={this.state.images} addSearchImage={this.addSearchImage} getOneBoard={this.getOneBoard} getImages={this.getImages} searchResults={this.state.searchResults} {...props} />)
+
         const SearchComponent = (props) => (<SearchBar getImages={this.getImages} {...props}/>)
 
         return (

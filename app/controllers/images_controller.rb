@@ -2,12 +2,9 @@ class ImagesController < ApplicationController
     before_action :authenticate_user!
       
     def index
-
-        puts "banana"
-      @board = current_user.boards
-      @images = @board.images
+      @image = Image.where(params[:id])
   
-      render json: @images
+      render json: @image
     end
   
     def show
