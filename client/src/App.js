@@ -51,6 +51,7 @@ class App extends Component {
         try {
             const response = await axios.get(`/users/${userId}`)
             console.log("This is a res", response)
+            this.setState({current_user: response.data.data})
             return response.data
         } catch (error) {
             console.log("Did not get", error)
@@ -106,10 +107,11 @@ class App extends Component {
 
     addImageSignup = async () => {
 
-        let image_url = prompt("Please enter an Image URL.")
+        let image = prompt("Please enter an Image URL.")
         const user = await this.getCurrentUser()
         const imageUpdate = await axios.patch(`/users/${user.id}`, {
-            image: image_url})
+            image})
+           await this.getCurrentUser()
 
             console.log('ImageUpdateRes:', imageUpdate)
 

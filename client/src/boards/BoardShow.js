@@ -120,7 +120,7 @@ class BoardShow extends Component {
     async componentWillMount () {
         const boardId = this.props.match.params.id
         const thisBoard = await this.props.getOneBoard(boardId)
-        const images = await this.getBoardImages(boardId)
+        const images = await this.getBoardImages(thisBoard)
         console.log("This is the board:", thisBoard)
         this.setState({board: thisBoard})     
     }
