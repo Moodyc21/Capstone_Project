@@ -59,6 +59,8 @@ class SignUpLogIn extends Component {
 
     render() {
         return (
+    
+            
             <Formdiv>
                 <Formdivtwo>
                 <form>
@@ -84,6 +86,7 @@ class SignUpLogIn extends Component {
                       <SignUp signUp={this.props.signUp} signedIn={this.state.signedIn} signedUp={this.props.signedUp} signedIn={this.props.signedIn}/>
                     </div>
             </Formdiv>
+            
         )
     }
 }

@@ -5,6 +5,7 @@ import axios from 'axios'
 import BoardsList from "./boards/BoardsList";
 import BoardShow from './boards/BoardShow'
 import SearchBar from './search/SearchBar'
+import Navbar from './navbar/Navbar.js'
 import {clearAuthTokens, saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from "./util/SessionHeaderUtil";
 import SignUp from './forms/SignUp.js'
 import styled from 'styled-components'
@@ -224,8 +225,11 @@ class App extends Component {
         const BoardShowComponent = (props) => (<BoardShow images={this.state.images} getOneBoard={this.getOneBoard} getImages={this.getImages} searchResults={this.state.searchResults} {...props} />)
 
         const SearchComponent = (props) => (<SearchBar getImages={this.getImages} {...props}/>)
+        
 
         return (
+            <div>
+                <Navbar/>
             <Router>
         <Background>
             
@@ -243,7 +247,7 @@ class App extends Component {
                         <Route path="/boards/:id" render={BoardShowComponent}/>
                     </Switch>
 
-                    {/* If user is signed in, redirect to their posts. */}
+                    
                     <div>
                     {this.state.signedIn ? null : <Redirect to="/signUp"/>}
                     </div>
@@ -264,6 +268,9 @@ class App extends Component {
             
               </Background>
               </Router>
+
+              </div>
+            
             
         )
     }
