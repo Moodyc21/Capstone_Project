@@ -226,8 +226,9 @@ class App extends Component {
         const SearchComponent = (props) => (<SearchBar getImages={this.getImages} {...props}/>)
 
         return (
-        <Background>
             <Router>
+        <Background>
+            
                 <HomeWrapper>
               <MuiThemeProvider>
                 
@@ -260,8 +261,9 @@ class App extends Component {
 
             </HomeWrapper>
                 
-            </Router>
+            
               </Background>
+              </Router>
             
         )
     }
